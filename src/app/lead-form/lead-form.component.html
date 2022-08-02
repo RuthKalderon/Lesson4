@@ -1,0 +1,49 @@
+<form (ngSubmit)="onSubmit(leadForm)" #leadForm="ngForm"> 
+    <div ngModelGroup="UserDetails">
+        <label for="fname">First Name</label> 
+        <input required #fname="ngModel"
+            id="name"
+            ngModel
+            name="name"  
+            pattern="[A-Za-z0-9]{0,10}"> 
+        <div [hidden]="fname.valid || fname.pristine" > 
+            First Name is required , nubmers, letters
+        </div> 
+        <br/> 
+        <label for="lName">Last name</label> 
+        <input required #lName="ngModel"
+            id="lName"
+            ngModel
+            name="lName" 
+            pattern="[A-Za-z0-9]{0,10}" > 
+        <div [hidden]="lName.valid || lName.pristine" > 
+            First Name is required , nubmers, letters
+        </div> 
+        <br/> 
+        <label for="userID">ID number</label> 
+        <input required #userID="ngModel"
+            id="userID"
+            ngModel
+            name="userID" 
+            pattern="[0-9]{0,10}" > 
+        <div [hidden]="userID.valid || userID.pristine" > 
+            ID number is required , only numbers
+        </div> 
+        
+    </div>
+    <!-- <label for="platform ">platform:</label> 
+    <select #platform="ngModel" required 
+             ngModel
+             name="platform" 
+             class="form-control">
+        <option *ngFor="let x of ['facebook','gmail','github']" [value]="x"> {{x}}</option> 
+    </select> 
+    <div [hidden]="platform.valid || platform.pristine"> 
+      Platform is required 
+    </div> 
+<br/><br/>  -->
+  <button type="submit" [disabled]="!leadForm.valid">Submit</button> 
+</form> 
+<div [hidden]="!leadForm.submitted"> 
+    <h2>You Logged as :  {{ fname.value }}</h2> 
+</div>
