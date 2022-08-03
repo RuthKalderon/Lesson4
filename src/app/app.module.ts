@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 
 import { FirstComponent } from './first/first.component';
 import { LeadFormComponent } from './lead-form/lead-form.component';
+// import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+
 
 @NgModule({
   declarations: [
@@ -17,9 +19,10 @@ import { LeadFormComponent } from './lead-form/lead-form.component';
   imports: [
     FormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    // BsDropdownModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,LeadFormComponent]
 })
 export class AppModule { }
