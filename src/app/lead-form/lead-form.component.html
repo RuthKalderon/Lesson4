@@ -1,37 +1,88 @@
-<form (ngSubmit)="onSubmit(leadForm)" #leadForm="ngForm">
-    <div ngModelGroup="UserDetails">
-        <label for="fname">First Name</label>
-        <input required #fname="ngModel" id="name" ngModel name="name" pattern="[A-Za-z0-9]{0,10}">
-        <div [hidden]="fname.valid || fname.pristine">
-            First Name is required , nubmers, letters
+<h3>It's My form</h3>
+<form (ngSubmit)="onSubmit(leadForm)" #leadForm="ngForm" class="w-100">
+    <div ngModelGroup="UserDetails" class="row form-group">
+        <div class="col">
+            <label for="fname" class="col-sm-6 col-form-label">First Name</label>
+            <input required #fname="ngModel" id="name" ngModel name="name" pattern="[A-Za-z0-9]{0,10}"
+                class="form-control">
+            <div [hidden]="fname.valid || fname.pristine" class="text-danger">
+                First Name is required , nubmers, letters
+            </div>
         </div>
-        <br />
-        <label for="lName">Last name</label>
-        <input required #lName="ngModel" id="lName" ngModel name="lName" pattern="[A-Za-z0-9]{0,10}">
-        <div [hidden]="lName.valid || lName.pristine">
-            First Name is required , nubmers, letters
+        <div class="col">
+            <label for="lName" class="col-sm-6 col-form-label">Last name</label>
+            <input required #lName="ngModel" id="lName" ngModel name="lName" pattern="[A-Za-z0-9]{0,10}"
+                class="form-control">
+            <div [hidden]="lName.valid || lName.pristine" class="text-danger">
+                First Name is required , nubmers, letters
+            </div>
         </div>
-        <br />
-        <label for="userID">ID number</label>
-        <input required #userID="ngModel" id="userID" ngModel name="userID" pattern="[0-9]{0,10}">
-        <div [hidden]="userID.valid || userID.pristine">
-            ID number is required , only numbers
-        </div>
-
-    </div>
-    <div ngModelGroup="phoneNumber">
-        <label>Type of phone</label>
-        <div *ngFor="let phone of phones">
-            <div class="radio">
-                <input type="radio" name="radio" id="radio-{{phone.id}}" [(ngModel)]="phoneValue"
-                    [value]="phone.value" />
-
-                <label for="radio-{{phone.id}}">{{phone.id}} </label>
-
+        <div class="col">
+            <label for="userID" class="col-sm-6 col-form-label">ID number</label>
+            <input required #userID="ngModel" id="userID" ngModel name="userID" pattern="[0-9]{0,10}"
+                class="form-control">
+            <div [hidden]="userID.valid || userID.pristine" class="text-danger">
+                ID number is required , only numbers
             </div>
         </div>
     </div>
-        <!-- <label for="platform ">platform:</label> 
+    <fieldset class="mt-10">
+        <div class="row form-group" ngModelGroup="phoneNumberUser">
+            <div class="col">
+                <legend class="col-form-label col-sm-6">Type of phone</legend>
+                <div class="col-sm-10">
+                    <div  class="form-check">
+
+                        <div *ngFor="let phone of phones">
+                            <div class="radio">
+                                <input type="radio" name="radio" id="radio-{{phone.id}}" [(ngModel)]="selectPhone"
+                                    [value]="phone.id" class="form-check-input" (change)="selectArea='Select Area'" />
+
+                                <label for="radio-{{phone.id}}">{{phone.value}} </label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{selectArea}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <span class="dropdown-item" *ngFor="let area of this.getAreaList(selectPhone)"
+                            (click)="selectArea=area.value">{{area.value}}</span>
+                    </div>
+                </div>
+                <input required #phoneNumber="ngModel" id="phoneNumber"  name ="phoneNumber" ngModel pattern="[0-9]{7,10}"
+                    class="form-control">
+                <div [hidden]="phoneNumber.valid || phoneNumber.pristine" class="text-danger">
+                    Phone Number is required , nubmers
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div ngModelGroup="userAddress" class="row form-group">
+        <div class="col">
+            <label for="cityName" class="col-sm-6 col-form-label">City</label>
+            <input required #cityName="ngModel" id="cityName" ngModel name="cityName" pattern="[a-zA-Z',.\s-]{1,25}"
+                class="form-control">
+            <div [hidden]="cityName.valid || cityName.pristine" class="text-danger">
+                City name is required , only letters
+            </div>
+        </div>
+        <div class="col">
+            <label for="address" class="col-sm-6 col-form-label">Address</label>
+            <input required #address="ngModel" id="address" ngModel name="address"  
+                class="form-control">
+            <div [hidden]="address.valid || address.pristine" class="text-danger">
+                Address is required , nubmers, letters
+            </div>
+        </div>
+    </div>
+    <!-- <label for="platform ">platform:</label> 
     <select #platform="ngModel" required 
              ngModel
              name="platform" 
@@ -42,8 +93,9 @@
       Platform is required 
     </div> 
 <br/><br/>  -->
-        <button type="submit" [disabled]="!leadForm.valid">Submit</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!leadForm.valid || selectArea =='Select Area'">Login my form</button>
 </form>
-<div [hidden]="!leadForm.submitted">
-    <h2>You Logged as : {{ fname.value }}</h2>
+<div *ngIf="leadForm.submitted" [hidden]="!leadForm.submitted || selectArea =='Select Area'">
+    <h2>You Logged as : {{ fname.value }} {{lName.value}}</h2>
+    <span>Phone number is: {{selectArea}}-{{phoneNumber.value| lastDigits: 3 :'*' }} </span>
 </div>
