@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { lastValueFrom } from 'rxjs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FirstComponent } from './first/first.component';
 import { LeadFormComponent } from './lead-form/lead-form.component';
+import { LastDigits } from './pipes/last-digits';
 // import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 
@@ -14,7 +16,8 @@ import { LeadFormComponent } from './lead-form/lead-form.component';
   declarations: [
     AppComponent,
     FirstComponent,
-    LeadFormComponent
+    LeadFormComponent,
+    LastDigits
   ],
   imports: [
     FormsModule,
